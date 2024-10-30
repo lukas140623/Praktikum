@@ -1,46 +1,96 @@
 #include <Arduino.h>
 
-int istPrimzahl(int a);
+/*int LED_S = D0;
+int LED_A = D1;
+int LED_V = D2;
+int LED_Z = D3;
+int LED_E = D4;
 
-int zahl = 1;
+int zahl = 24;
+
+void setup()
+{ 
+  Serial.begin(9600);
+  pinMode(LED_S, OUTPUT);
+  pinMode(LED_A, OUTPUT);
+  pinMode(LED_V, OUTPUT);
+  pinMode(LED_Z, OUTPUT);
+  pinMode(LED_E, OUTPUT);
+
+}
+
+void loop()
+{
+  zahl++;
+  if (zahl > 31)
+    zahl = 0;
+
+  int S = zahl / 16;
+  int A = (zahl - (S*16))/ 8;
+  int V = (zahl - (S*16) - (A*8)) / 4;
+  int Z = (zahl - (S*16) - (A*8) - (V*4)) / 2;
+  int E = (zahl - (S*16) - (A*8) - (V*4) - (Z*2)) / 1; 
+
+  Serial.print("Binar: ");
+  
+  Serial.print(S);
+  Serial.print(A);
+  Serial.print(V);
+  Serial.print(Z);
+  Serial.print(E);
+
+  Serial.print(" ");
+
+  Serial.print((zahl & 0b10000) > 0);
+  Serial.print((zahl & 8) != 0);
+  Serial.print((zahl & 4) != 0);
+  Serial.print((zahl & 2) != 0);
+  Serial.print((zahl & 1) != 0);
+  Serial.println();
+
+  if (S == 1) {
+    digitalWrite(LED_S, HIGH);
+  } else {
+    digitalWrite(LED_S, LOW);
+  }
+
+  if (A == 1) {
+    digitalWrite(LED_A, HIGH);
+  } else {
+    digitalWrite(LED_A, LOW);
+  }
+
+  if (V == 1) {
+    digitalWrite(LED_V, HIGH);
+  } else {
+    digitalWrite(LED_V, LOW);
+  }
+
+  if (Z == 1) {
+    digitalWrite(LED_Z, HIGH);
+  } else {
+    digitalWrite(LED_Z, LOW);
+  }
+
+  if (E == 1) {
+    digitalWrite(LED_E, HIGH);
+  } else {
+    digitalWrite(LED_E, LOW);
+  }
+
+  delay(2000);
+
+}*/
+
+
+int Sensor = A0;
+int Sensor_Value = analogRead(Sensor);
 
 void setup() {
-  // put your setup code here, to run once:
+  pinMode(Sensor, INPUT);
   Serial.begin(9600);
-
-  for (int a = zahl; a <= 100;a++){ 
-    int istPrimezahl = istPrimzahl(a);
-  
-    if (istPrimezahl == 1){
-      Serial.print("true");
-      Serial.print("  --> ");
-      Serial.println(a);
-    } else {
-      /*Serial.print("false");
-      Serial.print(" --> ");
-      Serial.println(a);*/
-    }
-  }
 }
-
+   
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-int istPrimzahl(int a)
-{
-  int istPrimezahl = 1;
-
-  if (a <= 1) {
-    istPrimezahl = 0;
-  } else {
-    for (int b = 2; b < a; b++) {
-      if (a % b == 0) {
-        istPrimezahl = 0 ;
-        break;
-      }
-    }
-  }
-
-  return istPrimezahl;
+  Serial.print(Sensor_Value);
 }
