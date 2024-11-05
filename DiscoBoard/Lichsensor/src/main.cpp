@@ -2,6 +2,20 @@
 
 int Sensorwert = 0;
 
+#define SENSOR_PIN A0
+
+uint8_t ledStatus[] = {
+    0b00000000,
+    0b00000001,
+    0b00000011,
+    0b00000111,
+    0b00001111,
+    0b00011111,
+    0b00111111,
+    0b01111111,
+    0b11111111,
+};
+
 void setup() {
  Serial.begin(9600);
  pinMode(D0, OUTPUT);
@@ -15,98 +29,47 @@ void setup() {
 }
 
 void loop() {
- Sensorwert = analogRead(A0);
- delay(30);
+ Sensorwert = analogRead(SENSOR_PIN);
+ delay(20);
  Serial.println(Sensorwert);
+
+
+    int index = 0;
  if ( Sensorwert <= 30) {
-  digitalWrite(D0, LOW);
-  digitalWrite(D1, LOW);
-  digitalWrite(D2, LOW);
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+        index = 0;
  }
  else if (Sensorwert > 30 && Sensorwert <= 50) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, LOW);
-  digitalWrite(D2, LOW);
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+        index = 1;
  }
  else if (Sensorwert > 50 && Sensorwert <=70) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, LOW);
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
- }
+        index = 2;
+ } 
  else if (Sensorwert > 70 && Sensorwert <=90) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+        index = 3;
  }
  else if (Sensorwert > 90 && Sensorwert <=110) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, LOW);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+        index = 4;
  }
- else if (Sensorwert > 110 && Sensorwert <=130 ) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D5, LOW);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+ else if (Sensorwert > 110 && Sensorwert <=130) {
+        index = 5;
  }
-  else if (Sensorwert > 130 && Sensorwert <=150) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D5, HIGH);
-  digitalWrite(D6, LOW);
-  digitalWrite(D7, LOW);
+ else if (Sensorwert > 130 && Sensorwert <=150) {
+        index = 6;
  }
  else if (Sensorwert > 150 && Sensorwert <=170) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D5, HIGH);
-  digitalWrite(D6, HIGH);
-  digitalWrite(D7, LOW);
+        index = 7;
  }
- else if (Sensorwert > 170 ) {
-  digitalWrite(D0, HIGH);
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D5, HIGH);
-  digitalWrite(D6, HIGH);
-  digitalWrite(D7, HIGH);
+ else if (Sensorwert > 170 && Sensorwert <=200) {
+        index = 8;
  }
+
+    digitalWrite(D0, ledStatus[index] & 0b00000001);
+    digitalWrite(D1, ledStatus[index] & 0b00000010);
+    digitalWrite(D2, ledStatus[index] & 0b00000100);
+    digitalWrite(D3, ledStatus[index] & 0b00001000);
+    digitalWrite(D4, ledStatus[index] & 0b00010000);
+    digitalWrite(D5, ledStatus[index] & 0b00100000);
+    digitalWrite(D6, ledStatus[index] & 0b01000000);
+    digitalWrite(D7, ledStatus[index] & 0b10000000);
 }
   
